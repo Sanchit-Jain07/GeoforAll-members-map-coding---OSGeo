@@ -6,17 +6,16 @@
         href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.1.1/css/ol.css" type="text/css">
     <style>
         .map {
-            height: 400px;
+            height: 500px;
             width: 100%;
         }
     </style>
     <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.1.1/build/ol.js"></script>
-    <title>OpenLayers example</title>
+    <title>OSGEO Web Scraper</title>
 </head>
 
 <body>
-    <h2>My Map</h2>
-    <div id="map" class="map"></div>
+    <!--<div id="map" class="map"></div>-->
     <script type="text/javascript">
         fetch('/data')
             .then(function (response) {
@@ -25,7 +24,32 @@
             .then(function (json) {
                 console.log('GET response as JSON:');
                 console.log(json);
-                console.log(json.location);
+                for (var i = 0; i < json.d.length; i++) {
+
+                }
+                for (var i = 0; i < json.d.length; i++) {
+                    console.log(json.d[i].location);
+                    var h2 = document.createElement("h2");
+                    h2.innerHTML = json.d[i].name;
+                    document.body.appendChild(h2);
+                    var div = document.createElement("div");
+                    div.id = json.d[i].name;
+                    div.className = 'map';
+                    document.body.appendChild(div);
+                    var map = new ol.Map({
+                        target: json.d[i].name,
+                        layers: [
+                            new ol.layer.Tile({
+                                source: new ol.source.OSM()
+                            })
+                        ],
+                        view: new ol.View({
+                            center: ol.proj.fromLonLat(json.d[i].location),
+                            zoom: 15
+                        })
+                    });
+
+                }
             })
 
 
@@ -33,6 +57,3 @@
 </body>
 
 </html>
-<script>
-
-</script>
