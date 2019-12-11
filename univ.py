@@ -9,8 +9,8 @@ def universities_scraper():
     my_table = soup.find("table", {"class": "wikitable sortable"})
     links = my_table.findAll("tr")
     universities = []
-    for i in range(1, 2):
-        x = links[i].text.strip().splitlines()
+    for i in links:
+        x = i.text.strip().splitlines()
         temp = []
         for j in x:
             if j:
@@ -18,7 +18,12 @@ def universities_scraper():
         universities.append(temp)
     udata = []
     for i in universities:
-
-        udata.append([{"name": i[1],"location": [37.41, 8.82]}])
-    return udata
-
+        try:
+            coord = i[5].split(',')
+            udata.append({"name": i[1],"location": [float(coord[0]), float(coord[1])]})
+        except:
+            continue
+    udict = {'d':udata}
+    return udict
+    '''print(universities)
+universities_scraper()'''

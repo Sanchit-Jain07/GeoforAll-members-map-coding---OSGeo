@@ -5,13 +5,13 @@ app = Flask(__name__)
 
 
 @app.route("/data", methods=["GET", "POST"])
-def index():
+def data():
     message = universities_scraper()
     return jsonify(message)
 
 
-@app.route("/test")
-def test_page():
+@app.route("/")
+def index():
     return render_template("index.html")
 
 
