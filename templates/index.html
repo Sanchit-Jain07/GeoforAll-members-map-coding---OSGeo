@@ -25,9 +25,6 @@
                 console.log('GET response as JSON:');
                 console.log(json);
                 for (var i = 0; i < json.d.length; i++) {
-
-                }
-                for (var i = 0; i < json.d.length; i++) {
                     console.log(json.d[i].location);
                     var h2 = document.createElement("h2");
                     h2.innerHTML = json.d[i].name;
